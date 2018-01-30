@@ -1,0 +1,85 @@
+#lang racket
+
+;nate smith
+;csci 320 - Pothering
+;1.29.18
+
+(define (make_list_of_size n e);makes a list of length n out of the expression e; e.g.
+  (cond                        ;(mklist 4 '451) should return '(451 451 451 451)
+    ((= n 1) (cons e '()))
+    (else (cons e (make_list_of_size (- n 1) e)))
+  )
+  
+)
+'___________________________
+'list_size_tests_here:
+'___________________________
+(make_list_of_size 4 '451)
+(make_list_of_size 2 '(a s d f))
+(make_list_of_size 4 (- 4 1))
+
+
+(define (zeros l);counts the number of zeros in a simple list l
+  (cond
+    ((null? l) 0)
+    ((= 0 (car l)) (+ 1 (zeros (cdr l))))
+    (else (+ 0 (zeros (cdr l))))
+  )
+)
+'___________________________
+'zeros_tests_here:
+'___________________________
+(zeros '(0 1 0 0))
+(zeros '())
+(zeros '(4 5 1))
+
+
+(define (power a b);returns a^b, where b is an integer
+  (cond
+    ((= a 0) 0)
+    ((= b 0) 1)
+    ((= b 1) a)
+    ((= b -1) (/ 1 a))
+    ((< b 0)(* (/ 1 a) (power a (+ b 1))))
+    ((> b 0) (* a (power a (- b 1))))
+  )
+)
+'___________________________
+'power_tests_here:
+'___________________________
+(power 2 8)
+(power 2 -1)
+(power 2 -3)
+(power 0 -3)
+(power 2 0)
+
+
+
+(define (remove l a);removes specified element a from list l
+  (cond
+    ((null? l) l)
+    ((= a (car l)) (cdr l))
+    (else (cons (car l) (remove (cdr l) a)))
+    )
+)
+'___________________________
+'remove_tests_here:
+'___________________________
+(remove '(1 2 3 4) 3)
+(remove '() 3)
+(remove '(1 2 3 (a 3 b) 4) 3)
+
+
+(define (largest l);returns largest number in simple list l
+  (cond            
+    ((null? l) l)
+    ((null? (cdr l)) (car l))
+    ((< (car l) (car (cdr l))) (largest (cdr l)))
+    (else (largest (cons (car l) (cdr (cdr l)))))
+  )
+)
+'___________________________
+'largest_tests_here:
+'___________________________
+(largest '(1 2 3 6 4))
+(largest '(-1 -2 -3 -4 -5))
